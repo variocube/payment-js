@@ -5,8 +5,8 @@ die() {
 	exit 1
 }
 
-# Allow to make release only from master
-[[ $(git rev-parse --abbrev-ref HEAD) == "master" ]] || die "Error: Release can only be made from master branch."
+# Allow to make release only from main
+[[ $(git rev-parse --abbrev-ref HEAD) == "main" ]] || die "Error: Release can only be made from main branch."
 
 # Make sure we are up to date
 echo -n "git pull... "
