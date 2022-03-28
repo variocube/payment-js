@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2015",
+    "lib": ["es5", "es2015", "dom"],
+    "jsx": "react",
+    "downlevelIteration": true,
+    "moduleResolution": "node",
+//    "resolveJsonModule": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "outDir": "./esm",
+    "baseUrl": "./",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "./src/index.ts"
+  ]
+}

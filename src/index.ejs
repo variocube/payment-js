@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+</head>
+<body>
+<style>
+    body {
+        background-color: #FFF;
+        font-family: 'Roboto', 'sans-serif';
+    }
+    .app-loading-message {
+        margin: 2em;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+    .app-loading-message h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+    /*.logo {*/
+    /*    display: block;*/
+    /*    width: 200px;*/
+    /*    margin: 30px auto 0;*/
+    /*}*/
+</style>
+<style>.preloader{position:absolute;top:35%;left:50%;width:450px;margin:-225px 0 0 -225px}.noscript{font-family:Roboto,Arial,Helvetica,sans-serif;padding-top:2em;padding-left:1em;padding-right:1em;max-width:450px;margin-left:auto;margin-right:auto}.spinner-logo{padding-top:20px;width:200px;margin-left:auto;margin-right:auto}.spinner-tagline{padding-top:20px;font-family:Roboto,Arial,Helvetica,sans-serif;text-align:center}.spinner{height:100px;width:100px;display:block;margin-left:auto;margin-right:auto;-webkit-animation:rotation 1s infinite linear;-moz-animation:rotation 1s infinite linear;-o-animation:rotation 1s infinite linear;animation:rotation 1s infinite linear;border:6px solid rgba(0,0,0,.2);border-radius:100%}.spinner:before{content:"";display:block;position:absolute;left:-6px;top:-6px;height:100%;width:100%;border-top:6px solid #05164d;border-left:6px solid transparent;border-bottom:6px solid transparent;border-right:6px solid transparent;border-radius:100%}@-webkit-keyframes rotation{from{-webkit-transform:rotate(0)}to{-webkit-transform:rotate(359deg)}}@-moz-keyframes rotation{from{-moz-transform:rotate(0)}to{-moz-transform:rotate(359deg)}}@-o-keyframes rotation{from{-o-transform:rotate(0)}to{-o-transform:rotate(359deg)}}@keyframes rotation{from{transform:rotate(0)}to{transform:rotate(359deg)}}</style>
+
+<div id="content">
+    <div id="app-loading-container">
+        <div class="preloader">
+            <div class="spinner"></div>
+            <div class="spinner-logo">
+<!--                <img src="vc_logo.svg" alt="Variocube GmbH">-->
+            </div>
+            <div class="spinner-tagline">
+                <h1><%= htmlWebpackPlugin.options.title %></h1>
+
+                <div class="app-loading-message" lang="en">
+                    <h4>Please be patient while we initialize this application for you.</h4>
+                    <p>
+                        <small>
+                            If this message doesn't disappear within a few seconds,
+                            your device might not support the application.
+                        </small>
+                    </p>
+                </div>
+                <div class="app-loading-message" lang="de">
+                    <h4>Bitte warten Sie, während die Anwendung geladen wird...</h4>
+
+                    <p>
+                        <small>
+                            Wenn diese Nachricht nicht nach wenigen Sekunden verschwindet,
+                            unterstützt Ihr Gerät diese Anwendung vermutlich nicht.
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script>
+    (function () {
+        var languages = navigator.languages || [navigator.language || navigator.userLanguage];
+        for (var i = 0; i < languages.length; i++) {
+            var langCode = languages[i].substr(0, 2);
+            if (["en", "de"].indexOf(langCode) >= 0) {
+                var messageElements = document.getElementsByClassName("app-loading-message");
+                for (var j = 0; j < messageElements.length; j++) {
+                    var messageElement = messageElements[j];
+                    var messageLang = messageElement.getAttribute("lang");
+                    if (messageLang !== langCode) {
+                        messageElement.parentNode.removeChild(messageElement);
+                    }
+                }
+                break;
+            }
+        }
+    })();
+</script>
+</body>
+</html>
