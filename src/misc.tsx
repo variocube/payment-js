@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Component, CSSProperties} from "react";
-import {paypalLogo} from "./assets/vectors";
 
 export class SvgLoader extends Component<{ svgString: string, className?: string, style?: CSSProperties }> {
 
@@ -37,5 +36,3 @@ export class SvgLoader extends Component<{ svgString: string, className?: string
         return <div className={['vcp-icon', className].join(' ')} style={style} dangerouslySetInnerHTML={{__html: svgString}} />;
     }
 }
-
-export const PayPalIcon = () => (<SvgLoader svgString={paypalLogo} style={{ height: '50%', overflow: 'hidden' }} />);

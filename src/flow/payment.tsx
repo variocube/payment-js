@@ -17,8 +17,8 @@ import {PaypalPayment} from "./paypal";
 import {StripeCardPayment, StripePaymentRequest, StripeSepaPayment} from "./stripe";
 import {PaymentMethod, PaymentStatus, PaymentType, StripeClientSecret} from "../types";
 import {styles} from "../theme";
-import {PayPalIcon} from "../misc";
 import {EuroIcon, ImageIcon, LayersIcon, PaymentIcon, RefreshIcon} from "../icons";
+import {PayPalIcon} from "../assets/PayPalIcon";
 
 const messages = resources.getStrings();
 
@@ -123,7 +123,7 @@ function renderPaymentTypeIcon(type: PaymentType) {
         case PaymentType.SepaDirectDebit:
             return <EuroIcon style={{ color: '#fff' }}/>;
         case PaymentType.PayPal:
-            return <PayPalIcon/>;
+            return <PayPalIcon style={{ height: '50%', overflow: 'hidden' }} />;
         case PaymentType.PaymentRequest:
             return <LayersIcon style={{ color: '#fff' }}/>;
         default:
