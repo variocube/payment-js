@@ -49,7 +49,7 @@ const CardPaymentForm = ({stripe, elements, stripeClientSecret, onPaymentConfirm
 
     const handleSubmit = useCallback((event?: any) => {
         if (event) event.preventDefault();
-        toggleProcessing();
+        setProcessing(true)
         setError(undefined);
         let data;
         if (stripeClientSecret.paymentMethodId !== undefined) {
@@ -64,7 +64,6 @@ const CardPaymentForm = ({stripe, elements, stripeClientSecret, onPaymentConfirm
         }
         stripe.confirmCardPayment(stripeClientSecret.clientSecret, data)
             .then(({error, paymentIntent}) => {
-                toggleProcessing();
                 let confirmed = false;
                 if (paymentIntent && (paymentIntent.status === 'processing' || paymentIntent.status === 'succeeded')) {
                     confirmed = true;
@@ -82,6 +81,9 @@ const CardPaymentForm = ({stripe, elements, stripeClientSecret, onPaymentConfirm
                 if (confirmed && paymentIntent) {
                     onPaymentConfirmed(paymentIntent, saveMethod);
                 }
+            })
+            .finally(() => {
+                setProcessing(false);
             });
     }, [stripe, elements, stripeClientSecret, onPaymentError, onPaymentConfirmed])
 
@@ -90,8 +92,6 @@ const CardPaymentForm = ({stripe, elements, stripeClientSecret, onPaymentConfirm
             handleSubmit();
         }
     }, []);
-
-    const toggleProcessing = () => setProcessing(!processing);
 
     const toggleSaveMethod = () => setSaveMethod(!saveMethod);
 
@@ -241,12 +241,12 @@ const SepaPaymentForm = ({stripe, elements, stripeClientSecret, payeeName, onPay
                         setError(error.message);
                         onPaymentError(error);
                     }
-                    setProcessing(false);
                 }
                 if (confirmed && paymentIntent) {
                     onPaymentConfirmed(paymentIntent, saveMethod);
                 }
-            });
+            })
+            .finally(() => setProcessing(false));
     }, [stripe, elements, stripeClientSecret, onPaymentError, onPaymentConfirmed, billingDetails, setProcessing])
 
     const toggleSaveMethod = () => setSaveMethod(!saveMethod);
