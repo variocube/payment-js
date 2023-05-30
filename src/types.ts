@@ -30,6 +30,7 @@ export enum PaymentType {
 export interface PaymentMethod {
     stripe?: StripePaymentMethod;
     paypal?: PaypalPaymentMethod;
+    wallee?: WalleePaymentMethod;
     publicKey?: string;
 }
 
@@ -41,7 +42,11 @@ export type StripePaymentMethod = {
 
 export type PaypalPaymentMethod = {
     type: PaymentType
-};
+}
+
+export type WalleePaymentMethod = {
+    type: PaymentType
+}
 
 export interface StripeClientSecret {
     clientSecret: string;

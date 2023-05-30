@@ -81,6 +81,11 @@ export const resources = new Resources(language || Language.DE, {
         [Language.DE]: "Bitte wählen Sie Ihre Zahlungsmethode aus:",
         [Language.EE]: "Palun valige oma makseviis:"
     },
+    LoadingPayment: {
+        [Language.EN]: "Loading payment. Please wait...",
+        [Language.DE]: "Zahlung wird gelädt. Bitte warten... ",
+        [Language.EE]: "Makse laadimine. Palun oodake...",
+    },
     StorePaymentMethodCards: {
         [Language.EN]: "Stored Credit Card",
         [Language.DE]: "Gespeicherte Kreditkarte",
@@ -279,17 +284,22 @@ export const resources = new Resources(language || Language.DE, {
     ErrorCodePaymentCreateStripeMethodError: {
         [Language.EN]: 'Failed to initiate payment (Cards). Please contact support.',
         [Language.DE]: 'Die Zahlung könnte nicht starten (Cards). Bitte kontaktieren Sie den Support.',
-        [Language.EE]: 'Makset ei õnnestunud algatada (kaardid). Palun võtke ühendust klienditoega.'
+        [Language.EE]: 'Makset ei õnnestunud algatada (Cards). Palun võtke ühendust klienditoega.'
     },
     ErrorCodePaymentCreatePayPalMethodError: {
         [Language.EN]: 'Failed to initiate payment (PayPal). Please contact support.',
         [Language.DE]: 'Die Zahlung könnte nicht starten (PayPal). Bitte kontaktieren Sie den Support.',
-        [Language.EE]: 'Failed to initiate payment (PayPal). Please contact support.'
+        [Language.EE]: 'Makset ei õnnestunud algatada (PayPal). Palun võtke ühendust klienditoega.'
     },
     ErrorCodePaymentCapturePayPalError: {
         [Language.EN]: 'Failed to captured PayPal amount. Please contact support.',
         [Language.DE]: 'Der PayPal-Betrag konnte nicht erfasst werden. Bitte kontaktieren Sie den Support.',
         [Language.EE]: 'Ei õnnestunud jäädvustada PayPal summa. Palun võtke ühendust klienditoega.'
+    },
+    ErrorCodePaymentCreateWalleeMethodError: {
+        [Language.EN]: 'Failed to initiate payment (Wallee). Please contact support.',
+        [Language.DE]: 'Die Zahlung könnte nicht starten (Wallee). Bitte kontaktieren Sie den Support.',
+        [Language.EE]: 'Makset ei õnnestunud algatada (Wallee). Palun võtke ühendust klienditoega.'
     },
     ErrorOccurred: {
         [Language.EN]: "An error occurred. Code:",

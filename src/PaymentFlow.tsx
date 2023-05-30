@@ -44,10 +44,12 @@ export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onEr
         >
             <DialogContent id="payment-flow-box" style={(smallDisplay ? styles.contentWrapper : styles.contentBoxed) as any} classes={{ root: classes.dialogContent }}>
                 <Box px={smallDisplay ? 0 : 2} py={2} style={{ flexGrow: 1 }}>
-                    <PaymentShell onClose={onClose}
-                                  onError={(onError) ? onError : () => {}}
-                                  onProcessing={(onProcessing) ? onProcessing : (_p) => {}}
-                                  onSucceeded={onSucceeded}/>
+                    <PaymentShell
+                        onClose={onClose}
+                        onError={(onError) ? onError : () => {}}
+                        onProcessing={(onProcessing) ? onProcessing : (_p) => {}}
+                        onSucceeded={onSucceeded}
+                    />
                 </Box>
             </DialogContent>
         </Dialog>
@@ -78,6 +80,7 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>();
     const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
     const [stripeClientSecret, setStripeClientSecret] = useState<StripeClientSecret>();
+    const [busy, setBusy] = useState(false);
 
     const sendError = (error: Error) => {
         onError(error);
@@ -223,7 +226,7 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
             messages.Cancel;
         return (
             <Box style={{ textAlign: 'center'}} mt={2}>
-                <Button onClick={onClose} variant="contained" color="primary">{cancelText}</Button>
+                <Button onClick={onClose} variant="contained" color="primary" disabled={busy}>{cancelText}</Button>
             </Box>
         )
     }
@@ -263,13 +266,16 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
                 <div>
                     { payment && (
                         <Fragment>
-                            <PaymentMethodList paymentMethods={paymentMethods}
-                                               payeeName={payeeName} country={payeeCountry}
-                                               amount={payment.amount}
-                                               currency={payment.currency}
-                                               onPaymentError={sendError}
-                                               onPaymentConfirmed={handlePaymentConfirmed}
-                                               onSelect={handlePaymentMethodSelected}/>
+                            <PaymentMethodList
+                                paymentMethods={paymentMethods}
+                                payeeName={payeeName} country={payeeCountry}
+                                amount={payment.amount}
+                                currency={payment.currency}
+                                onPaymentError={sendError}
+                                onPaymentConfirmed={handlePaymentConfirmed}
+                                onSelect={handlePaymentMethodSelected}
+                                onBusy={setBusy}
+                            />
                             { (payment.status === PaymentStatus.Failed) && (
                                 <Box mt={2}>
                                     <Alert severity="warning" style={{ textAlign: 'center' }}>

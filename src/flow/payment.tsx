@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import {
     Avatar,
     Box,
@@ -19,6 +19,7 @@ import {PaymentMethod, PaymentStatus, PaymentType, StripeClientSecret} from "../
 import {styles} from "../theme";
 import {EuroIcon, ImageIcon, LayersIcon, PaymentIcon, RefreshIcon} from "../icons";
 import {PayPalIcon} from "../assets/PayPalIcon";
+import {WalleePayment} from "./wallee";
 
 const messages = resources.getStrings();
 
@@ -31,22 +32,29 @@ interface PaymentMethodListProps {
     onPaymentError: (error: Error) => void;
     onPaymentConfirmed: (status: PaymentStatus) => void;
     onSelect: (paymentMethod: PaymentMethod, useStoredMethod: boolean) => void;
+    onBusy: (busy: boolean) => void;
 }
 
-export function PaymentMethodList({paymentMethods, currency, onPaymentError, onPaymentConfirmed, onSelect, payeeName, country, amount}: PaymentMethodListProps) {
+export function PaymentMethodList({paymentMethods, currency, onPaymentError, onPaymentConfirmed, onSelect, payeeName, country, amount, onBusy}: PaymentMethodListProps) {
     const [disabled, setDisabled] = useState(false);
     const [canPR, setCanPR] = useState(true);
 
-    const handleMethodSelection = (method: PaymentMethod, useStoredMethod: boolean) => {
+    const hasWalleeGateway = paymentMethods.find(m => !!m.wallee) != null;
+
+    function handleMethodSelection(method: PaymentMethod, useStoredMethod: boolean) {
         setDisabled(true);
         onSelect(method, useStoredMethod);
         window.setTimeout(() => {
             setDisabled(false);
         }, 3000);
-    };
+    }
+
+    if (hasWalleeGateway) {
+        return (<WalleePayment onLoaded={onBusy} />);
+    }
 
     return (
-        <div>
+        <Fragment>
             <Typography variant="body1" align="center">{messages.SelectPaymentMethod}</Typography>
             <Box my={2}/>
             <Paper variant="outlined" style={{ position: 'relative' }}>
@@ -56,7 +64,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                         paymentMethods
                             .map((method, i) => (
                                 <div key={'payment-method-' + i}>
-                                    { (method?.stripe?.last4Digits !== undefined) && (
+                                    {(method?.stripe?.last4Digits !== undefined) && (
                                         <ListItem button disabled={disabled} onClick={() => handleMethodSelection(method, true)}>
                                             <ListItemAvatar>
                                                 <Avatar style={styles.primaryBg}><RefreshIcon style={{ color: '#fff' }}/></Avatar>
@@ -65,7 +73,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                           secondary={method.stripe?.last4Digits} />
                                         </ListItem>
                                     )}
-                                    { (method.stripe && method.stripe.last4Digits === undefined && [PaymentType.Cards, PaymentType.SepaDirectDebit].indexOf(method.stripe.type) > -1) && (
+                                    {(method.stripe && method.stripe.last4Digits === undefined && [PaymentType.Cards, PaymentType.SepaDirectDebit].indexOf(method.stripe.type) > -1) && (
                                         <ListItem button disabled={disabled} onClick={() => handleMethodSelection(method, false)}>
                                             <ListItemAvatar>
                                                 <Avatar style={styles.primaryBg}>
@@ -76,7 +84,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                           secondary={(messages as any)['PaymentMethod' + method.stripe.type + 'Description']} />
                                         </ListItem>
                                     )}
-                                    { (method.stripe && method.publicKey && method.stripe.type === PaymentType.PaymentRequest && canPR) && (
+                                    {(method.stripe && method.publicKey && method.stripe.type === PaymentType.PaymentRequest && canPR) && (
                                         <ListItem disabled={disabled}>
                                             <ListItemAvatar>
                                                 <Avatar style={styles.primaryBg}>
@@ -90,7 +98,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                                   onNotSupported={() => setCanPR(false)}/>
                                         </ListItem>
                                     )}
-                                    { (method.paypal && method.publicKey !== undefined) && (
+                                    {(method.paypal && method.publicKey !== undefined) && (
                                         <ListItem disabled={disabled}>
                                             <ListItemAvatar>
                                                 <Avatar style={styles.primaryBg}>
@@ -112,7 +120,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                     }
                 </List>
             </Paper>
-        </div>
+        </Fragment>
     );
 }
 

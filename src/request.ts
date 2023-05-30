@@ -67,6 +67,17 @@ export async function capturePaypalOrder(id: string): Promise<PaymentStatus> {
     return getJsonResult(response);
 }
 
+export async function fetchWalleeLightboxUrl(id: string, successUrl: string, failedUrl: string): Promise<{ lightBoxUrl: string }> {
+    const response = await request(`${env.url}/public/${id}/wallee-lightbox-url`, {
+        method: 'post',
+        body: JSON.stringify({
+            successUrl,
+            failedUrl
+        })
+    });
+    return getJsonResult(response);
+}
+
 export async function getPayeeName(id: string): Promise<string> {
     const response = await request(`${env.url}/public/${id}/payee-name`);
     return getJsonResult<string>(response);
