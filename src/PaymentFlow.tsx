@@ -306,6 +306,7 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
                                     <HourglassEmptyRoundedIcon fontSize="large"/>
                                 </Box>
                                 <Typography variant="body1" align="center">{messages.PaymentInProcessing}</Typography>
+                                { renderCloseButton() }
                             </div>
                         )}
                         { payment.status === PaymentStatus.Succeeded && (
