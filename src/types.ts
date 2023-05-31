@@ -5,11 +5,18 @@ export interface PublicPayment {
     providerId?: string;
     info?: string;
     type?: PaymentType;
+    provider?: PaymentProvider;
     status: PaymentStatus;
     metadata?: { [key: string]: any };
     description?: string;
     createdAt: string;
     paidAt?: string;
+}
+
+export enum PaymentProvider {
+    PayPal = 'PayPal',
+    Stripe = 'Stripe',
+    Wallee = 'Wallee',
 }
 
 export enum PaymentStatus {

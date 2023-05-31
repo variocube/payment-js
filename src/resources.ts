@@ -305,6 +305,21 @@ export const resources = new Resources(language || Language.DE, {
         [Language.EN]: "An error occurred. Code:",
         [Language.DE]: "Ein Fehler ist aufgetreten. Code:",
         [Language.EE]: 'Tekkis viga. Kood:'
+    },
+    TwintPaymentRenewal: {
+        [Language.EN]: "Renew TWINT Payment",
+        [Language.DE]: "TWINT-Zahlung erneuern",
+        [Language.EE]: 'TWINT makse uuendamine'
+    },
+    TwintPaymentRenewalNote: {
+        [Language.EN]: "For TWINT Payment Only",
+        [Language.DE]: "Nur für TWINT-Zahlung",
+        [Language.EE]: 'Ainult TWINT-maksete puhul'
+    },
+    TwintPaymentRenewalHint: {
+        [Language.EN]: 'If you have accidentally close the payment processing page in TWINT. You can use the "Renew TWINT Payment" button to retry the payment process again.',
+        [Language.DE]: 'Wenn Sie versehentlich die Seite für die Zahlungsabwicklung in TWINT geschlossen haben. Sie können auf "TWINT-Zahlung erneuern" klicken, um den Zahlungsvorgang erneut zu versuchen.',
+        [Language.EE]: 'Kui olete kogemata sulgenud makse töötlemise lehe TWINT. Võite kasutada nuppu "TWINT makse uuendamine", et uuesti proovida makseprotsessi.'
     }
 });
 

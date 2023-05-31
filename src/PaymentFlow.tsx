@@ -1,9 +1,17 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Alert, Box, Button, Dialog, DialogContent, Divider, Typography} from "@mui/material";
+import {Alert, AlertTitle, Box, Button, Dialog, DialogContent, Divider, Typography} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import {styles} from "./theme";
 import {resources} from "./resources";
-import {ErrorCode, PaymentMethod, PaymentStatus, PaymentType, PublicPayment, StripeClientSecret} from "./types";
+import {
+    ErrorCode,
+    PaymentMethod,
+    PaymentProvider,
+    PaymentStatus,
+    PaymentType,
+    PublicPayment,
+    StripeClientSecret
+} from "./types";
 import {
     env, fetchStripeClientSecret,
     getPayeeCountry,
@@ -29,9 +37,10 @@ type PaymentFlowProps = {
     onError?: (error: Error) => void,
     live?: boolean,
     smallDevice?: boolean,
+    onRenewalClick?: () => void,
 }
 
-export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onError, live, smallDevice}: PaymentFlowProps) => {
+export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onError, live, smallDevice, onRenewalClick}: PaymentFlowProps) => {
     const smallDisplay = window.innerWidth <= 480 || smallDevice;
     env.stage = (live) ? 'live' : 'dev';
     env.paymentId = paymentId;
@@ -49,6 +58,7 @@ export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onEr
                         onError={(onError) ? onError : () => {}}
                         onProcessing={(onProcessing) ? onProcessing : (_p) => {}}
                         onSucceeded={onSucceeded}
+                        onRenewalClick={onRenewalClick}
                     />
                 </Box>
             </DialogContent>
@@ -69,9 +79,10 @@ type PaymentShellProps = {
     onProcessing: (payment: PublicPayment) => void,
     onSucceeded: (payment: PublicPayment) => void,
     onError: (error: Error) => void
+    onRenewalClick?: () => void
 }
 
-export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: PaymentShellProps) => {
+export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, onRenewalClick}: PaymentShellProps) => {
     const [stateMachine, setStateMachine] = useState<PaymentStateMachine>(PaymentStateMachine.InitiatePayment);
     const [payment, setPayment] = useState<PublicPayment>();
     const [error, setError] = useState<string>();
@@ -289,13 +300,14 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
                 </div>
             )}
             { (stateMachine === PaymentStateMachine.RenderPaymentView && paymentMethod) && (
-                 <PaymentView payeeName={payeeName}
-                              paymentMethod={paymentMethod}
-                              onPaymentBack={handlePaymentBack}
-                              onPaymentError={sendError}
-                              onPaymentConfirmed={handlePaymentConfirmed}
-                              stripeClientSecret={stripeClientSecret}
-                 />
+                <PaymentView
+                    payeeName={payeeName}
+                    paymentMethod={paymentMethod}
+                    onPaymentBack={handlePaymentBack}
+                    onPaymentError={sendError}
+                    onPaymentConfirmed={handlePaymentConfirmed}
+                    stripeClientSecret={stripeClientSecret}
+                />
             )}
             { stateMachine === PaymentStateMachine.PaymentResult && (
                 payment && (
@@ -306,6 +318,19 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
                                     <HourglassEmptyRoundedIcon fontSize="large"/>
                                 </Box>
                                 <Typography variant="body1" align="center">{messages.PaymentInProcessing}</Typography>
+
+                                {(PaymentProvider.Wallee === payment.provider && !!onRenewalClick) && (
+                                    <Fragment>
+                                        <Box my={2} />
+                                        <Alert severity="warning">
+                                            <AlertTitle>{messages.TwintPaymentRenewalNote}</AlertTitle>
+                                            <Typography>{messages.TwintPaymentRenewalHint}</Typography>
+                                            <Box my={2}/>
+                                            <Button size="small" variant="contained" onClick={onRenewalClick}>{messages.TwintPaymentRenewal}</Button>
+                                        </Alert>
+                                    </Fragment>
+                                )}
+
                                 { renderCloseButton() }
                             </div>
                         )}

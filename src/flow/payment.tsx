@@ -69,8 +69,10 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                             <ListItemAvatar>
                                                 <Avatar style={styles.primaryBg}><RefreshIcon style={{ color: '#fff' }}/></Avatar>
                                             </ListItemAvatar>
-                                            <ListItemText primary={(messages as any)['StorePaymentMethod' + method.stripe.type]}
-                                                          secondary={method.stripe?.last4Digits} />
+                                            <ListItemText
+                                                primary={(messages as any)['StorePaymentMethod' + method.stripe.type]}
+                                                secondary={method.stripe?.last4Digits}
+                                            />
                                         </ListItem>
                                     )}
                                     {(method.stripe && method.stripe.last4Digits === undefined && [PaymentType.Cards, PaymentType.SepaDirectDebit].indexOf(method.stripe.type) > -1) && (
@@ -80,8 +82,10 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                     { renderPaymentTypeIcon(method.stripe.type) }
                                                 </Avatar>
                                             </ListItemAvatar>
-                                            <ListItemText primary={(messages as any)['PaymentMethod' + method.stripe.type]}
-                                                          secondary={(messages as any)['PaymentMethod' + method.stripe.type + 'Description']} />
+                                            <ListItemText
+                                                primary={(messages as any)['PaymentMethod' + method.stripe.type]}
+                                                secondary={(messages as any)['PaymentMethod' + method.stripe.type + 'Description']}
+                                            />
                                         </ListItem>
                                     )}
                                     {(method.stripe && method.publicKey && method.stripe.type === PaymentType.PaymentRequest && canPR) && (
@@ -91,11 +95,13 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                     { renderPaymentTypeIcon(PaymentType.PaymentRequest) }
                                                 </Avatar>
                                             </ListItemAvatar>
-                                            <StripePaymentRequest publicKey={method.publicKey} currency={currency} amount={amount} country={country} payeeName={payeeName}
-                                                                  onCanceled={() => setDisabled(false)}
-                                                                  onSelected={() => handleMethodSelection(method, false)}
-                                                                  onPaymentError={e => onPaymentError(e as any)} onPaymentConfirmed={onPaymentConfirmed}
-                                                                  onNotSupported={() => setCanPR(false)}/>
+                                            <StripePaymentRequest
+                                                publicKey={method.publicKey} currency={currency} amount={amount} country={country} payeeName={payeeName}
+                                                onCanceled={() => setDisabled(false)}
+                                                onSelected={() => handleMethodSelection(method, false)}
+                                                onPaymentError={e => onPaymentError(e as any)} onPaymentConfirmed={onPaymentConfirmed}
+                                                onNotSupported={() => setCanPR(false)}
+                                            />
                                         </ListItem>
                                     )}
                                     {(method.paypal && method.publicKey !== undefined) && (
@@ -105,11 +111,13 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                     { renderPaymentTypeIcon(PaymentType.PayPal) }
                                                 </Avatar>
                                             </ListItemAvatar>
-                                            <PaypalPayment publicKey={method.publicKey} currency={currency}
-                                                           onCanceled={() => setDisabled(false)}
-                                                           onSelected={() => handleMethodSelection(method, false)}
-                                                           onError={onPaymentError}
-                                                           onPaymentConfirmed={onPaymentConfirmed} />
+                                            <PaypalPayment
+                                                publicKey={method.publicKey} currency={currency}
+                                                onCanceled={() => setDisabled(false)}
+                                                onSelected={() => handleMethodSelection(method, false)}
+                                                onError={onPaymentError}
+                                                onPaymentConfirmed={onPaymentConfirmed}
+                                            />
                                         </ListItem>
                                     )}
                                     { i < (paymentMethods.length - 1) && (
