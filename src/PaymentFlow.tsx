@@ -16,7 +16,7 @@ import {
     env, fetchStripeClientSecret,
     getPayeeCountry,
     getPayeeName,
-    listPaymentMethods,
+    listPaymentMethods, renewWalleeTwintPayment,
     retrievePayment,
     saveStripePaymentMethod
 } from "./request";
@@ -36,11 +36,10 @@ type PaymentFlowProps = {
     onProcessing?: (payment: PublicPayment) => void,
     onError?: (error: Error) => void,
     live?: boolean,
-    smallDevice?: boolean,
-    onRenewalClick?: () => void,
+    smallDevice?: boolean
 }
 
-export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onError, live, smallDevice, onRenewalClick}: PaymentFlowProps) => {
+export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onError, live, smallDevice}: PaymentFlowProps) => {
     const smallDisplay = window.innerWidth <= 480 || smallDevice;
     env.stage = (live) ? 'live' : 'dev';
     env.paymentId = paymentId;
@@ -58,7 +57,6 @@ export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onEr
                         onError={(onError) ? onError : () => {}}
                         onProcessing={(onProcessing) ? onProcessing : (_p) => {}}
                         onSucceeded={onSucceeded}
-                        onRenewalClick={onRenewalClick}
                     />
                 </Box>
             </DialogContent>
@@ -79,10 +77,9 @@ type PaymentShellProps = {
     onProcessing: (payment: PublicPayment) => void,
     onSucceeded: (payment: PublicPayment) => void,
     onError: (error: Error) => void
-    onRenewalClick?: () => void
 }
 
-export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, onRenewalClick}: PaymentShellProps) => {
+export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: PaymentShellProps) => {
     const [stateMachine, setStateMachine] = useState<PaymentStateMachine>(PaymentStateMachine.InitiatePayment);
     const [payment, setPayment] = useState<PublicPayment>();
     const [error, setError] = useState<string>();
@@ -92,6 +89,8 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, onRen
     const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
     const [stripeClientSecret, setStripeClientSecret] = useState<StripeClientSecret>();
     const [busy, setBusy] = useState(false);
+
+    const [twintPaymentRenewalError, setTwintPaymentRenewalError] = useState(false);
 
     const sendError = (error: Error) => {
         onError(error);
@@ -210,6 +209,18 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, onRen
         setStateMachine(PaymentStateMachine.AwaitPaymentMethodSelection);
     }
 
+    async function handleTwintPaymentRenewal() {
+        if (payment) {
+            try {
+                const newPayment = await renewWalleeTwintPayment(env.paymentId);
+                setPayment(newPayment);
+            } catch (err) {
+                console.error('Failed to renew TWINT payment', err);
+                setTwintPaymentRenewalError(true);
+            }
+        }
+    }
+
     const renderAmount = (payment: PublicPayment) => {
         let currencySymbol;
         switch (payment.currency) {
@@ -319,15 +330,21 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, onRen
                                 </Box>
                                 <Typography variant="body1" align="center">{messages.PaymentInProcessing}</Typography>
 
-                                {(PaymentProvider.Wallee === payment.provider && !!onRenewalClick) && (
+                                {(PaymentProvider.Wallee === payment.provider) && (
                                     <Fragment>
                                         <Box my={2} />
                                         <Alert severity="warning">
                                             <AlertTitle>{messages.TwintPaymentRenewalNote}</AlertTitle>
                                             <Typography>{messages.TwintPaymentRenewalHint}</Typography>
                                             <Box my={2}/>
-                                            <Button size="small" variant="contained" onClick={onRenewalClick}>{messages.TwintPaymentRenewal}</Button>
+                                            <Button size="small" variant="contained" onClick={handleTwintPaymentRenewal}>{messages.TwintPaymentRenewal}</Button>
                                         </Alert>
+                                        <Box my={1} />
+                                        {twintPaymentRenewalError && (
+                                            <Alert severity="error">
+                                                {messages.TwintPaymentRenewalError}
+                                            </Alert>
+                                        )}
                                     </Fragment>
                                 )}
 
