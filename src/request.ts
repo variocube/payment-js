@@ -78,8 +78,8 @@ export async function fetchWalleeLightboxUrl(id: string, successUrl: string, fai
     return getJsonResult(response);
 }
 
-export async function renewWalleeTwintPayment(id: string): Promise<PublicPayment> {
-    const response = await request(`${env.url}/public/${id}/wallee-twint-payment-renewal`, {
+export async function renewWalleePayment(id: string): Promise<PublicPayment> {
+    const response = await request(`${env.url}/public/${id}/wallee-renew-payment`, {
         method: 'post'
     });
     return getJsonResult(response);

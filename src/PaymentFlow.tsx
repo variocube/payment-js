@@ -16,7 +16,7 @@ import {
     env, fetchStripeClientSecret,
     getPayeeCountry,
     getPayeeName,
-    listPaymentMethods, renewWalleeTwintPayment,
+    listPaymentMethods, renewWalleePayment,
     retrievePayment,
     saveStripePaymentMethod
 } from "./request";
@@ -90,7 +90,8 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
     const [stripeClientSecret, setStripeClientSecret] = useState<StripeClientSecret>();
     const [busy, setBusy] = useState(false);
 
-    const [twintPaymentRenewalError, setTwintPaymentRenewalError] = useState(false);
+    const [walleePaymentRenewalError, setWalleePaymentRenewalError] = useState(false);
+    const [inProgress, setInProgress] = useState(false);
 
     const sendError = (error: Error) => {
         onError(error);
@@ -209,15 +210,17 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
         setStateMachine(PaymentStateMachine.AwaitPaymentMethodSelection);
     }
 
-    async function handleTwintPaymentRenewal() {
+    async function handleWalleePaymentRenewal() {
         if (payment) {
+            setInProgress(true);
             try {
-                const newPayment = await renewWalleeTwintPayment(env.paymentId);
-                setPayment(newPayment);
+                const newPayment = await renewWalleePayment(env.paymentId);
+                await handlePayment(newPayment);
             } catch (err) {
-                console.error('Failed to renew TWINT payment', err);
-                setTwintPaymentRenewalError(true);
+                console.error('Failed to renew wallee payment', err);
+                setWalleePaymentRenewalError(true);
             }
+            setInProgress(false);
         }
     }
 
@@ -329,26 +332,6 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
                                     <HourglassEmptyRoundedIcon fontSize="large"/>
                                 </Box>
                                 <Typography variant="body1" align="center">{messages.PaymentInProcessing}</Typography>
-
-                                {(PaymentProvider.Wallee === payment.provider) && (
-                                    <Fragment>
-                                        <Box my={2} />
-                                        <Alert severity="warning">
-                                            <AlertTitle>{messages.TwintPaymentRenewalNote}</AlertTitle>
-                                            <Typography>{messages.TwintPaymentRenewalHint}</Typography>
-                                            <Box my={2}/>
-                                            <Button size="small" variant="contained" onClick={handleTwintPaymentRenewal}>{messages.TwintPaymentRenewal}</Button>
-                                        </Alert>
-                                        <Box my={1} />
-                                        {twintPaymentRenewalError && (
-                                            <Alert severity="error">
-                                                {messages.TwintPaymentRenewalError}
-                                            </Alert>
-                                        )}
-                                    </Fragment>
-                                )}
-
-                                { renderCloseButton() }
                             </div>
                         )}
                         { payment.status === PaymentStatus.Succeeded && (
@@ -357,7 +340,6 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
                                     <CheckCircleOutlineRoundedIcon fontSize="large" style={styles.textSuccess}/>
                                 </Box>
                                 <Typography variant="body1" align="center">{messages.PaymentSucceeded}</Typography>
-                                { renderCloseButton() }
                             </div>
                         )}
                         { payment.status === PaymentStatus.Canceled && (
@@ -366,9 +348,27 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
                                     <HighlightOffIcon fontSize="large" style={styles.textDanger}/>
                                 </Box>
                                 <Typography variant="body1" align="center">{messages.PaymentCanceled}</Typography>
-                                { renderCloseButton() }
                             </div>
                         )}
+                        {PaymentProvider.Wallee === payment.provider && (payment.status === PaymentStatus.Processing || payment.status === PaymentStatus.Canceled) && (
+                            <Fragment>
+                                <Box my={2} />
+                                <Alert severity="warning">
+                                    <AlertTitle>{messages.Warning}</AlertTitle>
+                                    <Typography>{messages.WalleePaymentRenewalHint}</Typography>
+                                    <Box my={2}/>
+                                    <Button size="small" variant="contained" onClick={handleWalleePaymentRenewal} disabled={inProgress}>{messages.WalleePaymentRenewal}</Button>
+                                </Alert>
+                                <Box my={1} />
+                                {walleePaymentRenewalError && (
+                                    <Alert severity="error">
+                                        {messages.WalleePaymentRenewalError}
+                                    </Alert>
+                                )}
+                            </Fragment>
+                        )}
+
+                        {renderCloseButton()}
                     </div>
                 )
             )}

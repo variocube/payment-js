@@ -306,25 +306,25 @@ export const resources = new Resources(language || Language.DE, {
         [Language.DE]: "Ein Fehler ist aufgetreten. Code:",
         [Language.EE]: 'Tekkis viga. Kood:'
     },
-    TwintPaymentRenewal: {
-        [Language.EN]: "Renew TWINT Payment",
-        [Language.DE]: "TWINT-Zahlung erneuern",
-        [Language.EE]: 'TWINT makse uuendamine'
+    Warning: {
+        [Language.EN]: "Warning",
+        [Language.DE]: "Warnung",
+        [Language.EE]: 'Hoiatus'
     },
-    TwintPaymentRenewalNote: {
-        [Language.EN]: "For TWINT Payment Only",
-        [Language.DE]: "Nur für TWINT-Zahlung",
-        [Language.EE]: 'Ainult TWINT-maksete puhul'
+    WalleePaymentRenewal: {
+        [Language.EN]: "Renew Payment",
+        [Language.DE]: "Zahlung erneuern",
+        [Language.EE]: 'Uuenda makse'
     },
-    TwintPaymentRenewalHint: {
-        [Language.EN]: 'If you have accidentally close the payment processing page in TWINT. You can use the "Renew TWINT Payment" button to retry the payment process again.',
-        [Language.DE]: 'Wenn Sie versehentlich die Seite für die Zahlungsabwicklung in TWINT geschlossen haben. Sie können auf "TWINT-Zahlung erneuern" klicken, um den Zahlungsvorgang erneut zu versuchen.',
-        [Language.EE]: 'Kui olete kogemata sulgenud makse töötlemise lehe TWINT. Võite kasutada nuppu "TWINT makse uuendamine", et uuesti proovida makseprotsessi.'
+    WalleePaymentRenewalHint: {
+        [Language.EN]: 'If you have accidentally close the payment processing page in TWINT or your payment method got rejected, you can use the "Renew Payment" button to retry the payment process again.',
+        [Language.DE]: 'Wenn Sie versehentlich die Seite zur Zahlungsabwicklung in TWINT geschlossen haben oder Ihre Zahlungsmethode abgelehnt wurde, können Sie die Schaltfläche "Zahlung erneuern" verwenden, um den Zahlungsvorgang erneut zu versuchen.',
+        [Language.EE]: 'Kui sulgesite kogemata maksetöötluslehe TWINTis või teie makseviis lükati tagasi, saate makseprotsessi uuesti proovimiseks kasutada nuppu "Uuenda makse".'
     },
-    TwintPaymentRenewalError: {
-        [Language.EN]: 'Failed to renew TWINT payment.',
-        [Language.DE]: 'Die TWINT-Zahlung wurde nicht verlängert.',
-        [Language.EE]: 'TWINT-makse uuendamine ebaõnnestus.'
+    WalleePaymentRenewalError: {
+        [Language.EN]: 'Failed to renew payment.',
+        [Language.DE]: 'Die Zahlung könnte nicht erneuert.',
+        [Language.EE]: 'Makse uuendamine ebaõnnestus.'
     }
 });
 
