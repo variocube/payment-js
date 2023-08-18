@@ -83,7 +83,7 @@ export const resources = new Resources(language || Language.DE, {
     },
     LoadingPayment: {
         [Language.EN]: "Loading payment. Please wait...",
-        [Language.DE]: "Zahlung wird gelädt. Bitte warten... ",
+        [Language.DE]: "Zahlung wird geladen. Bitte warten... ",
         [Language.EE]: "Makse laadimine. Palun oodake...",
     },
     StorePaymentMethodCards: {
@@ -128,17 +128,17 @@ export const resources = new Resources(language || Language.DE, {
     },
     PaymentFormSavePaymentMethod: {
         [Language.EN]: "Save my current payment method for next checkout.",
-        [Language.DE]: "Bitte meine Zahlungsmethode speichern für die nächsten Zahlungen.",
+        [Language.DE]: "Bitte die Zahlungsmethode für weitere Zahlungen speichern.",
         [Language.EE]: 'Salvesta minu praegune makseviis järgmiseks maksekorraks.'
     },
     PaymentFormSepaDirectDebitAcceptance: {
         [Language.EN]: "By providing the IBAN and confirming this payment, I authorize/ We authorize (A) %PAYEE% to collect payments from my/our bank account by SEPA Direct Debit. At the same time (B) I/we instruct my/our credit institution to honour the direct debits drawn by %PAYEE% to my/our bank account.",
-        [Language.DE]: "Durch Angabe der IBAN und Bestätigung dieser Zahlung, ich ermächtige/ Wir ermächtigen (A) %PAYEE%, Zahlungen von meinem/ unserem Konto mittels Lastschrift einzuziehen. Zugleich (B) weise ich mein/ weisen wir unser Kreditinstitut an, die von %PAYEE% auf mein/ unser Konto gezogenen Lastschriften einzulösen.",
+        [Language.DE]: "Durch Angabe der IBAN und Bestätigung dieser Zahlung, ermächtige/n ich/wir (A) %PAYEE%, Zahlungen von meinem/ unserem Konto mittels Lastschrift einzuziehen. Zugleich (B) weise ich mein/ weisen wir unser Kreditinstitut an, die von %PAYEE% auf mein/ unser Konto gezogenen Lastschriften einzulösen.",
         [Language.EE]: 'IBANi esitades ja seda makset kinnitades volitan/ volitame (A) %PAYEE% koguma makseid minu/meie pangakontolt SEPA otsekorralduse teel. Samal ajal (B) annan/esitame oma krediidiasutusele korralduse täita %PAYEE% poolt minu/meie pangakontole tehtud otsekorraldusi.'
     },
     ProcessingPayment: {
         [Language.EN]: "Processing your payment. Please wait...",
-        [Language.DE]: "Ihrer Zahlung wird bearbeiten. Bitte warten...",
+        [Language.DE]: "Ihre Zahlung wird bearbeitet. Bitte warten...",
         [Language.EE]: 'Teie makse töötlemine. Palun oodake...'
     },
     PaymentCanceled: {
@@ -163,7 +163,7 @@ export const resources = new Resources(language || Language.DE, {
     },
     PaypalFailedToLoad: {
         [Language.EN]: "Could not load PayPal payment method. Please try a different method.",
-        [Language.DE]: "Leider können wir die PayPal-Zahlungsmethode nicht laden. Bitte versuchen Sie eine andere Methode.",
+        [Language.DE]: "Leider können wir die Zahlungsmethode PayPal nicht laden. Bitte versuchen Sie eine andere Zahlungsmethode.",
         [Language.EE]: 'Ei saanud laadida PayPal makseviisi. Palun proovige teist meetodit.'
     },
     PaypalFailedToCreateOrder: {
@@ -173,7 +173,7 @@ export const resources = new Resources(language || Language.DE, {
     },
     PaypalFailedToCaptureOrder: {
         [Language.EN]: 'Could not capture PayPal payment.',
-        [Language.DE]: 'Leider können wir Ihre PayPal-Zahlung nicht bearbeiten.',
+        [Language.DE]: 'Leider können wir Ihre PayPal-Zahlung nicht verarbeiten.',
         [Language.EE]: 'PayPal-makseid ei õnnestunud sisestada.'
     },
     Amount: {
@@ -237,18 +237,18 @@ export const resources = new Resources(language || Language.DE, {
         [Language.EE]: 'Makseviisid (kaardid) ei ole toetatud.'
     },
     ErrorCodePayeeRetrieveError: {
-        [Language.EN]: 'Payee not existed.',
-        [Language.DE]: 'Zahlungsempfänger nicht existiert.',
+        [Language.EN]: 'Payee does not exist.',
+        [Language.DE]: 'Zahlungsempfänger existiert nicht.',
         [Language.EE]: 'Makse saaja ei ole olemas.'
     },
     ErrorCodeInvalidPayer: {
         [Language.EN]: 'Invalid payer.',
-        [Language.DE]: 'Ungültiger Zahler.',
+        [Language.DE]: 'Ungültiger Bezahler.',
         [Language.EE]: 'Invaliidne maksja.'
     },
     ErrorCodePayerRetrieveError: {
-        [Language.EN]: 'Payer not existed.',
-        [Language.DE]: 'Zahler nicht existiert.',
+        [Language.EN]: 'Payer does not exist.',
+        [Language.DE]: 'Bezahler exisitert nicht.',
         [Language.EE]: 'Maksja ei ole olemas.'
     },
     ErrorCodePayerSaveMethodError: {
@@ -268,12 +268,12 @@ export const resources = new Resources(language || Language.DE, {
     },
     ErrorCodePaymentUseStoredMethodError: {
         [Language.EN]: 'Failed to use stored payment method.',
-        [Language.DE]: 'Die gespeicherte Zahlungsmethode konnte nicht verwendet werden.',
+        [Language.DE]: 'Die gespeicherte Zahlungsmethode konnte nicht benutzt werden.',
         [Language.EE]: 'Ei õnnestunud kasutada salvestatud makseviisi.'
     },
     ErrorCodePaymentRetrieveError: {
         [Language.EN]: 'Payment not existed.',
-        [Language.DE]: 'Zahlung nicht existiert.',
+        [Language.DE]: 'Zahlung existiert nicht.',
         [Language.EE]: 'Makse ei ole olemas.'
     },
     ErrorCodePaymentCreationError: {
@@ -293,12 +293,12 @@ export const resources = new Resources(language || Language.DE, {
     },
     ErrorCodePaymentCapturePayPalError: {
         [Language.EN]: 'Failed to captured PayPal amount. Please contact support.',
-        [Language.DE]: 'Der PayPal-Betrag konnte nicht erfasst werden. Bitte kontaktieren Sie den Support.',
+        [Language.DE]: 'Der PayPal-Betrag konnte nicht verarbeitet werden. Bitte kontaktieren Sie den Support.',
         [Language.EE]: 'Ei õnnestunud jäädvustada PayPal summa. Palun võtke ühendust klienditoega.'
     },
     ErrorCodePaymentCreateWalleeMethodError: {
         [Language.EN]: 'Failed to initiate payment (Wallee). Please contact support.',
-        [Language.DE]: 'Die Zahlung könnte nicht starten (Wallee). Bitte kontaktieren Sie den Support.',
+        [Language.DE]: 'Die Zahlung konnte nicht gestartet werden (Wallee). Bitte kontaktieren Sie den Support.',
         [Language.EE]: 'Makset ei õnnestunud algatada (Wallee). Palun võtke ühendust klienditoega.'
     },
     ErrorOccurred: {
@@ -312,18 +312,18 @@ export const resources = new Resources(language || Language.DE, {
         [Language.EE]: 'Hoiatus'
     },
     WalleePaymentRenewal: {
-        [Language.EN]: "Renew Payment",
-        [Language.DE]: "Zahlung erneuern",
+        [Language.EN]: "Restart Payment",
+        [Language.DE]: "Zahlung erneut starten",
         [Language.EE]: 'Uuenda makse'
     },
     WalleePaymentRenewalHint: {
-        [Language.EN]: 'If you have accidentally close the payment processing page in TWINT or your payment method got rejected, you can use the "Renew Payment" button to retry the payment process again.',
-        [Language.DE]: 'Wenn Sie versehentlich die Seite zur Zahlungsabwicklung in TWINT geschlossen haben oder Ihre Zahlungsmethode abgelehnt wurde, können Sie die Schaltfläche "Zahlung erneuern" verwenden, um den Zahlungsvorgang erneut zu versuchen.',
+        [Language.EN]: 'If you have accidentally close the payment processing page in TWINT or your payment method got rejected, you can use the "Restart Payment" button to retry the payment process again.',
+        [Language.DE]: 'Wenn Sie versehentlich die Seite zur Zahlungsabwicklung in TWINT geschlossen haben oder Ihre Zahlungsmethode abgelehnt wurde, können Sie die Schaltfläche "Zahlung erneut starten" verwenden, um den Zahlungsvorgang erneut zu versuchen.',
         [Language.EE]: 'Kui sulgesite kogemata maksetöötluslehe TWINTis või teie makseviis lükati tagasi, saate makseprotsessi uuesti proovimiseks kasutada nuppu "Uuenda makse".'
     },
     WalleePaymentRenewalError: {
-        [Language.EN]: 'Failed to renew payment.',
-        [Language.DE]: 'Die Zahlung könnte nicht erneuert.',
+        [Language.EN]: 'Failed to restart payment.',
+        [Language.DE]: 'Die Zahlung konnte nicht erneut gestartet werden.',
         [Language.EE]: 'Makse uuendamine ebaõnnestus.'
     }
 });
