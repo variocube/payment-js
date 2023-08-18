@@ -1,6 +1,6 @@
 {
   "name": "@variocube/payment-js",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "PaymentJS provides component for payment flow within internal applications of Variocube GmbH.",
   "main": "esm/index.js",
   "types": "esm/index.d.ts",
