@@ -73,12 +73,12 @@ export const resources = new Resources(language || Language.DE, {
     },
     InvalidPayment: {
         [Language.EN]: "Could not start payment. Please contact support!",
-        [Language.DE]: "Fehler beim starten der Zahlung. Bitte kontaktieren Sie uns.",
+        [Language.DE]: "Fehler beim Starten der Zahlung. Bitte kontaktieren Sie uns.",
         [Language.EE]: "Makseid ei saanud alustada. Palun võtke ühendust klienditoega!",
     },
     SelectPaymentMethod: {
-        [Language.EN]: "Please select your payment method:",
-        [Language.DE]: "Bitte wählen Sie Ihre Zahlungsmethode aus:",
+        [Language.EN]: "Please select a payment method:",
+        [Language.DE]: "Bitte wählen Sie eine Zahlungsmethode aus:",
         [Language.EE]: "Palun valige oma makseviis:"
     },
     LoadingPayment: {
@@ -93,7 +93,7 @@ export const resources = new Resources(language || Language.DE, {
     },
     StorePaymentMethodSepaDirectDebit: {
         [Language.EN]: "Stored SEPA Direct Debit",
-        [Language.DE]: "Gespeicherte SEPA-Lastschriftverfahren",
+        [Language.DE]: "Gespeichertes SEPA-Lastschriftverfahren",
         [Language.EE]: "Salvestatud SEPA otsekorraldus"
     },
     PaymentMethodCards: {
@@ -117,18 +117,18 @@ export const resources = new Resources(language || Language.DE, {
         [Language.EE]: 'Ühtse euromaksete piirkonna klientidele.'
     },
     PaymentMethodNotSupported: {
-        [Language.EN]: "Sorry! We don't support your selected payment method yet. Please try again with a different one.",
-        [Language.DE]: "Leider unterstützen wir Ihre gewählte Zahlungsmethode noch nicht. Bitte versuchen Sie noch einmal mit einer andere Zahlungsmethode.",
+        [Language.EN]: "Sorry! We don't support the selected payment method yet. Please try again with a different one.",
+        [Language.DE]: "Leider unterstützen wir die gewählte Zahlungsmethode noch nicht. Bitte versuchen Sie es noch einmal mit einer anderen Zahlungsmethode.",
         [Language.EE]: 'Vabandust! Me ei toeta veel teie valitud makseviisi. Palun proovige uuesti teise meetodiga.'
     },
     PaymentFormCardsDescription: {
-        [Language.EN]: "Please provider us your card information:",
-        [Language.DE]: "Bitte geben Sie uns Ihre Karteninformationen:",
+        [Language.EN]: "Please provide your card information:",
+        [Language.DE]: "Bitte geben Sie Ihre Karteninformationen ein:",
         [Language.EE]: 'Palun andke meile oma kaardi andmed:'
     },
     PaymentFormSavePaymentMethod: {
         [Language.EN]: "Save my current payment method for next checkout.",
-        [Language.DE]: "Bitte die Zahlungsmethode für weitere Zahlungen speichern.",
+        [Language.DE]: "Zahlungsmethode für weitere Zahlungen speichern.",
         [Language.EE]: 'Salvesta minu praegune makseviis järgmiseks maksekorraks.'
     },
     PaymentFormSepaDirectDebitAcceptance: {
@@ -148,7 +148,7 @@ export const resources = new Resources(language || Language.DE, {
     },
     PaymentSucceeded: {
         [Language.EN]: "Payment succeeded. Thank you very much.",
-        [Language.DE]: "Zahlung erfolgt. Vielen Dank.",
+        [Language.DE]: "Zahlung erfolgreich. Vielen Dank.",
         [Language.EE]: 'Maksmine õnnestus. Tänan teid väga.'
     },
     PaymentInProcessing: {
@@ -157,8 +157,8 @@ export const resources = new Resources(language || Language.DE, {
         [Language.EE]: 'Teie makset töödeldakse...'
     },
     PaymentFailed: {
-        [Language.EN]: "There was a fail attempt when charging your payment.",
-        [Language.DE]: "Es gab einen Fehlversuch bei der Bearbeitung Ihrer Zahlung.",
+        [Language.EN]: "There was a failure when charging your payment method.",
+        [Language.DE]: "Bei der Bearbeitung Ihrer Zahlung ist ein Fehler aufgetreten.",
         [Language.EE]: 'Teie makse laadimisel oli ebaõnnestunud katse.'
     },
     PaypalFailedToLoad: {
@@ -168,12 +168,12 @@ export const resources = new Resources(language || Language.DE, {
     },
     PaypalFailedToCreateOrder: {
         [Language.EN]: 'Could not create order for PayPal payment.',
-        [Language.DE]: 'Leider können wir keine Bestellung mit PayPal-Zahlung erstellen.',
+        [Language.DE]: 'Leider können wir keine Bestellung bei PayPal anlegen.',
         [Language.EE]: 'Ei saanud luua tellimust PayPal-makse jaoks.'
     },
     PaypalFailedToCaptureOrder: {
         [Language.EN]: 'Could not capture PayPal payment.',
-        [Language.DE]: 'Leider können wir Ihre PayPal-Zahlung nicht verarbeiten.',
+        [Language.DE]: 'Leider konnten wir Ihre PayPal-Zahlung nicht verarbeiten.',
         [Language.EE]: 'PayPal-makseid ei õnnestunud sisestada.'
     },
     Amount: {
@@ -208,7 +208,7 @@ export const resources = new Resources(language || Language.DE, {
     },
     Cancel: {
         [Language.EN]: "Cancel",
-        [Language.DE]: "Abrechen",
+        [Language.DE]: "Abbrechen",
         [Language.EE]: 'Tühista'
     },
     ReturnToMerchant: {
@@ -228,7 +228,7 @@ export const resources = new Resources(language || Language.DE, {
     },
     ErrorCodePayeeNotConfiguredForStripe: {
         [Language.EN]: 'Payment methods (Cards) not supported.',
-        [Language.DE]: 'Zahlungsmethoden (Cards) werden nicht unterstützt.',
+        [Language.DE]: 'Zahlungsmethode (Kreditkarten) wird nicht unterstützt.',
         [Language.EE]: ''
     },
     ErrorCodePayeeNotConfiguredForPayPal: {
@@ -272,7 +272,7 @@ export const resources = new Resources(language || Language.DE, {
         [Language.EE]: 'Ei õnnestunud kasutada salvestatud makseviisi.'
     },
     ErrorCodePaymentRetrieveError: {
-        [Language.EN]: 'Payment not existed.',
+        [Language.EN]: 'Payment does not exist.',
         [Language.DE]: 'Zahlung existiert nicht.',
         [Language.EE]: 'Makse ei ole olemas.'
     },
@@ -283,17 +283,17 @@ export const resources = new Resources(language || Language.DE, {
     },
     ErrorCodePaymentCreateStripeMethodError: {
         [Language.EN]: 'Failed to initiate payment (Cards). Please contact support.',
-        [Language.DE]: 'Die Zahlung könnte nicht starten (Cards). Bitte kontaktieren Sie den Support.',
+        [Language.DE]: 'Die Zahlung konnte nicht gestartet werden (Kreditkarte). Bitte kontaktieren Sie den Support.',
         [Language.EE]: 'Makset ei õnnestunud algatada (Cards). Palun võtke ühendust klienditoega.'
     },
     ErrorCodePaymentCreatePayPalMethodError: {
         [Language.EN]: 'Failed to initiate payment (PayPal). Please contact support.',
-        [Language.DE]: 'Die Zahlung könnte nicht starten (PayPal). Bitte kontaktieren Sie den Support.',
+        [Language.DE]: 'Die Zahlung konnte nicht gestartet werden (PayPal). Bitte kontaktieren Sie den Support.',
         [Language.EE]: 'Makset ei õnnestunud algatada (PayPal). Palun võtke ühendust klienditoega.'
     },
     ErrorCodePaymentCapturePayPalError: {
         [Language.EN]: 'Failed to captured PayPal amount. Please contact support.',
-        [Language.DE]: 'Der PayPal-Betrag konnte nicht verarbeitet werden. Bitte kontaktieren Sie den Support.',
+        [Language.DE]: 'Die PayPal-Zahlung konnte nicht verarbeitet werden. Bitte kontaktieren Sie den Support.',
         [Language.EE]: 'Ei õnnestunud jäädvustada PayPal summa. Palun võtke ühendust klienditoega.'
     },
     ErrorCodePaymentCreateWalleeMethodError: {
@@ -318,7 +318,7 @@ export const resources = new Resources(language || Language.DE, {
     },
     WalleePaymentRenewalHint: {
         [Language.EN]: 'If you have accidentally close the payment processing page in TWINT or your payment method got rejected, you can use the "Restart Payment" button to retry the payment process again.',
-        [Language.DE]: 'Wenn Sie versehentlich die Seite zur Zahlungsabwicklung in TWINT geschlossen haben oder Ihre Zahlungsmethode abgelehnt wurde, können Sie die Schaltfläche "Zahlung erneut starten" verwenden, um den Zahlungsvorgang erneut zu versuchen.',
+        [Language.DE]: 'Wenn Sie versehentlich die Seite zur Zahlungsabwicklung bei TWINT geschlossen haben oder Ihre Zahlungsmethode abgelehnt wurde, können Sie die Schaltfläche "Zahlung erneut starten" verwenden, um den Zahlungsvorgang erneut zu versuchen.',
         [Language.EE]: 'Kui sulgesite kogemata maksetöötluslehe TWINTis või teie makseviis lükati tagasi, saate makseprotsessi uuesti proovimiseks kasutada nuppu "Uuenda makse".'
     },
     WalleePaymentRenewalError: {
