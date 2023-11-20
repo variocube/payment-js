@@ -58,7 +58,7 @@ export function getNavigatorLanguages() {
 const language = getNavigatorLanguages()?.map(l => {
     let result: Language|null = null;
     for (let lang of Object.values(Language)) {
-        if (l.indexOf(lang) > -1) {
+        if (l.substring(0, 2).indexOf(lang) > -1) {
             result = lang;
             break;
         }
