@@ -22,7 +22,9 @@ const AppView = function(_props) {
                              onClose={toggleOpen}
                              onError={(e) => console.error('PAYMENT ERROR', e)}
                              onProcessing={() => console.log('PAYMENT IN PROCESSING')}
-                             onSucceeded={() => console.log('PAYMENT SUCCEEDED!')}/>
+                             onSucceeded={() => console.log('PAYMENT SUCCEEDED!')}
+                             language={"de-CH"}
+                />
             )}
 
         </div>

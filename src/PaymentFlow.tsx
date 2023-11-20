@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import {Alert, AlertTitle, Box, Button, Dialog, DialogContent, Divider, Typography} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import {styles} from "./theme";
-import {resources} from "./resources";
+import {Language, resources} from "./resources";
 import {
     ErrorCode,
     PaymentMethod,
@@ -36,14 +36,16 @@ type PaymentFlowProps = {
     onProcessing?: (payment: PublicPayment) => void,
     onError?: (error: Error) => void,
     live?: boolean,
-    smallDevice?: boolean
+    smallDevice?: boolean,
+    language?: string,
 }
 
-export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onError, live, smallDevice}: PaymentFlowProps) => {
+export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onError, live, smallDevice, language}: PaymentFlowProps) => {
     const smallDisplay = window.innerWidth <= 480 || smallDevice;
     env.stage = (live) ? 'live' : 'dev';
     env.paymentId = paymentId;
     const classes = useStyles();
+
     return (
         <Dialog open={true}
                 keepMounted
@@ -57,6 +59,7 @@ export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onEr
                         onError={(onError) ? onError : () => {}}
                         onProcessing={(onProcessing) ? onProcessing : (_p) => {}}
                         onSucceeded={onSucceeded}
+                        language={language}
                     />
                 </Box>
             </DialogContent>
@@ -76,10 +79,11 @@ type PaymentShellProps = {
     onClose: () => void,
     onProcessing: (payment: PublicPayment) => void,
     onSucceeded: (payment: PublicPayment) => void,
-    onError: (error: Error) => void
+    onError: (error: Error) => void;
+    language?: string
 }
 
-export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: PaymentShellProps) => {
+export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, language}: PaymentShellProps) => {
     const [stateMachine, setStateMachine] = useState<PaymentStateMachine>(PaymentStateMachine.InitiatePayment);
     const [payment, setPayment] = useState<PublicPayment>();
     const [error, setError] = useState<string>();
@@ -109,6 +113,11 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError}: Paym
     }
 
     useEffect(() => {
+        if (!!language) {
+            let parsed = language.substring(0, 2).toLowerCase();
+            if (Object.values(Language).map(l => l.toString()).includes(parsed))
+            resources.language = parsed as Language;
+        }
         getPayment()
             .then(async (p) => {
                 if (p) {
