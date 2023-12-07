@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import {env, fetchWalleeLightboxUrl} from "../request";
 import useAsyncEffect from "use-async-effect";
 import {Alert, Typography} from "@mui/material";
-import {resources} from "../resources";
+import {Language, resources} from "../resources";
 
 export function WalleePayment({onLoaded}: { onLoaded: (active: boolean) => void }) {
     const [error, setError] = useState(false);
@@ -26,7 +26,7 @@ export function WalleePayment({onLoaded}: { onLoaded: (active: boolean) => void 
     useAsyncEffect(async () => {
         try {
             const url = window.location.href;
-            const {lightBoxUrl} = await fetchWalleeLightboxUrl(env.paymentId, url, url);
+            const {lightBoxUrl} = await fetchWalleeLightboxUrl(env.paymentId, url, url, resources.language);
             if (lightBoxUrl) {
                 console.log('Wallee lightbox URL', lightBoxUrl);
                 const script = document.createElement('script');
