@@ -127,7 +127,7 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, langu
                     setPayeeCountry(payeeCountry);
                     await handlePayment(p);
                     if (p.status === PaymentStatus.Processing) {
-                        await reloadPayment();
+                        reloadPayment();
                     }
                     return;
                 }
@@ -180,11 +180,11 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, langu
         setPaymentMethod(paymentMethod);
     }
 
-    const handlePaymentConfirmed = async (status: PaymentStatus, saveMethod?: boolean) => {
-        if (payment && paymentMethod) {
-            if (paymentMethod.stripe) {
-                payment.type = paymentMethod.stripe.type;
-            } else if (paymentMethod.paypal) {
+    const handlePaymentConfirmed = async (status: PaymentStatus, method: PaymentMethod, saveMethod?: boolean) => {
+        if (payment) {
+            if (method.stripe) {
+                payment.type = method.stripe.type;
+            } else if (method.paypal) {
                 payment.type = PaymentType.PayPal;
             }
             payment.status = status;
@@ -198,6 +198,7 @@ export const PaymentShell = ({onClose, onProcessing, onSucceeded, onError, langu
                     sendError(error as any);
                 }
             }
+            console.log('switch status', status)
             switch (status) {
                 case PaymentStatus.Succeeded:
                     // Give the backend enough time to catch and execute VCP Callback

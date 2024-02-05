@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Fragment, useMemo, useState} from 'react';
+import {Fragment, useState} from 'react';
 import {
     Avatar,
     Box,
@@ -30,7 +30,7 @@ interface PaymentMethodListProps {
     amount: number;
     country: string;
     onPaymentError: (error: Error) => void;
-    onPaymentConfirmed: (status: PaymentStatus) => void;
+    onPaymentConfirmed: (status: PaymentStatus, method: PaymentMethod) => void;
     onSelect: (paymentMethod: PaymentMethod, useStoredMethod: boolean) => void;
     onBusy: (busy: boolean) => void;
 }
@@ -99,7 +99,8 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                 publicKey={method.publicKey} currency={currency} amount={amount} country={country} payeeName={payeeName}
                                                 onCanceled={() => setDisabled(false)}
                                                 onSelected={() => handleMethodSelection(method, false)}
-                                                onPaymentError={e => onPaymentError(e as any)} onPaymentConfirmed={onPaymentConfirmed}
+                                                onPaymentError={e => onPaymentError(e as any)}
+                                                onPaymentConfirmed={status => onPaymentConfirmed(status, method)}
                                                 onNotSupported={() => setCanPR(false)}
                                             />
                                         </ListItem>
@@ -116,7 +117,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                 onCanceled={() => setDisabled(false)}
                                                 onSelected={() => handleMethodSelection(method, false)}
                                                 onError={onPaymentError}
-                                                onPaymentConfirmed={onPaymentConfirmed}
+                                                onPaymentConfirmed={status => onPaymentConfirmed(status, method)}
                                             />
                                         </ListItem>
                                     )}
@@ -152,7 +153,7 @@ interface PaymentViewProps {
     paymentMethod: PaymentMethod;
     onPaymentBack: () => void;
     onPaymentError: (error: Error) => void;
-    onPaymentConfirmed: (status: PaymentStatus, saveMethod?: boolean) => void;
+    onPaymentConfirmed: (status: PaymentStatus, method: PaymentMethod, saveMethod?: boolean) => void;
     stripeClientSecret?: StripeClientSecret;
 }
 
@@ -164,14 +165,14 @@ export function PaymentView(props: PaymentViewProps) {
             case PaymentType.Cards:
                 method = <StripeCardPayment stripeClientSecret={stripeClientSecret}
                                             onPaymentError={e => onPaymentError(new Error('Failed to make Stripe Card Payment, error: ' + e.message))}
-                                            onPaymentConfirmed={onPaymentConfirmed}
+                                            onPaymentConfirmed={(status, saveMethod) => onPaymentConfirmed(status, paymentMethod, saveMethod)}
                                             publicKey={paymentMethod.publicKey}/>;
                 break;
             case PaymentType.SepaDirectDebit:
                 method = <StripeSepaPayment payeeName={payeeName}
                                             stripeClientSecret={stripeClientSecret}
                                             onPaymentError={e => onPaymentError(new Error('Failed to make Stripe Sepa Payment, error: ' + e.message))}
-                                            onPaymentConfirmed={onPaymentConfirmed}
+                                            onPaymentConfirmed={(status, saveMethod) => onPaymentConfirmed(status, paymentMethod, saveMethod)}
                                             publicKey={paymentMethod.publicKey}/>;
                 break;
             default:

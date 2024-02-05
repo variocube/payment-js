@@ -481,7 +481,8 @@ export const StripePaymentRequest = ({publicKey, currency, amount, country, paye
                         <PaymentRequestForm stripe={stripe}
                                             currency={currency} amount={amount} country={country}
                                             onPaymentSelect={onSelected} onPaymentCancel={onCanceled}
-                                            onPaymentError={onPaymentError} onPaymentConfirmed={paymentIntent => handlePaymentConfirmed(paymentIntent || {status: 'succeeded'} as any, false, onPaymentConfirmed)}
+                                            onPaymentError={onPaymentError}
+                                            onPaymentConfirmed={paymentIntent => handlePaymentConfirmed(paymentIntent || {status: 'succeeded'} as any, false, onPaymentConfirmed)}
                                             payeeName={payeeName}
                                             onNotSupported={onNotSupported}/>
                     )}
