@@ -20,6 +20,7 @@ import {styles} from "../theme";
 import {EuroIcon, ImageIcon, LayersIcon, PaymentIcon, RefreshIcon} from "../icons";
 import {PayPalIcon} from "../assets/PayPalIcon";
 import {WalleePayment} from "./wallee";
+import {CPayPayment} from "./cpay";
 
 const messages = resources.getStrings();
 
@@ -64,6 +65,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                         paymentMethods
                             .map((method, i) => (
                                 <div key={'payment-method-' + i}>
+                                    {i > 0 && <Divider/>}
                                     {(method?.stripe?.last4Digits !== undefined) && (
                                         <ListItem button disabled={disabled} onClick={() => handleMethodSelection(method, true)}>
                                             <ListItemAvatar>
@@ -121,8 +123,15 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                             />
                                         </ListItem>
                                     )}
-                                    { i < (paymentMethods.length - 1) && (
-                                        <Divider/>
+                                    {method.cpay && (
+                                        <ListItem disabled={disabled}>
+                                            <ListItemAvatar>
+                                                <Avatar style={styles.primaryBg}>
+                                                    { renderPaymentTypeIcon(PaymentType.Cards) }
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <CPayPayment />
+                                        </ListItem>
                                     )}
                                 </div>
                             ))
