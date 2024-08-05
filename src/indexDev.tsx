@@ -25,6 +25,7 @@ const AppView = function(_props) {
                              onProcessing={() => console.log('PAYMENT IN PROCESSING')}
                              onSucceeded={() => console.log('PAYMENT SUCCEEDED!')}
                              language={"de-CH"}
+                             live={false}
                 />
             )}
 

@@ -1,4 +1,4 @@
-import {PaymentMethod, PaymentStatus, PublicPayment, StripeClientSecret} from "./types";
+import {CPayPaymentData, PaymentMethod, PaymentStatus, PublicPayment, StripeClientSecret} from "./types";
 
 class Environment {
 
@@ -82,6 +82,16 @@ export async function fetchWalleeLightboxUrl(id: string, successUrl: string, fai
 export async function renewWalleePayment(id: string): Promise<PublicPayment> {
     const response = await request(`${env.url}/public/${id}/wallee-renew-payment`, {
         method: 'post'
+    });
+    return getJsonResult(response);
+}
+
+export async function fetchCPayPaymentData(id: string, redirectUrl: string): Promise<CPayPaymentData> {
+    const response = await request(`${env.url}/public/${id}/cpay-payment-data`, {
+        method: 'post',
+        body: JSON.stringify({
+            redirectUrl
+        })
     });
     return getJsonResult(response);
 }

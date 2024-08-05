@@ -1,8 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {env, fetchWalleeLightboxUrl} from "../request";
-import useAsyncEffect from "use-async-effect";
 import {Alert, Typography} from "@mui/material";
-import {Language, resources} from "../resources";
+import {resources} from "../resources";
 
 export function WalleePayment({onLoaded}: { onLoaded: (active: boolean) => void }) {
     const [error, setError] = useState(false);
@@ -23,20 +22,21 @@ export function WalleePayment({onLoaded}: { onLoaded: (active: boolean) => void 
         return () => clearInterval(interval);
     }, [])
 
-    useAsyncEffect(async () => {
-        try {
-            const url = window.location.href;
-            const {lightBoxUrl} = await fetchWalleeLightboxUrl(env.paymentId, url, url, resources.language);
-            if (lightBoxUrl) {
-                console.log('Wallee lightbox URL', lightBoxUrl);
-                const script = document.createElement('script');
-                script.src = lightBoxUrl;
-                document.getElementsByTagName('head').item(0)!.append(script);
-            }
-        } catch (err) {
-            console.error('Failed to fetch Wallee lightbox url', err);
-            setError(true);
-        }
+    useEffect(() => {
+        const url = window.location.href;
+        fetchWalleeLightboxUrl(env.paymentId, url, url, resources.language)
+            .then(({lightBoxUrl}) => {
+                if (lightBoxUrl) {
+                    console.log('Wallee lightbox URL', lightBoxUrl);
+                    const script = document.createElement('script');
+                    script.src = lightBoxUrl;
+                    document.getElementsByTagName('head').item(0)!.append(script);
+                }
+            })
+            .catch(err => {
+                console.error('Failed to fetch Wallee lightbox url', err);
+                setError(true);
+            });
     }, [])
 
     const messages = resources.getStrings();

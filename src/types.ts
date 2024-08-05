@@ -38,6 +38,7 @@ export interface PaymentMethod {
     stripe?: StripePaymentMethod;
     paypal?: PaypalPaymentMethod;
     wallee?: WalleePaymentMethod;
+    cpay?: CPayPaymentMethod;
     publicKey?: string;
 }
 
@@ -51,6 +52,10 @@ export type PaypalPaymentMethod = {
     type: PaymentType
 }
 
+export type CPayPaymentMethod = {
+    type: PaymentType
+}
+
 export type WalleePaymentMethod = {
     type: PaymentType
 }
@@ -58,6 +63,14 @@ export type WalleePaymentMethod = {
 export interface StripeClientSecret {
     clientSecret: string;
     paymentMethodId?: string;
+}
+
+export interface CPayPaymentData {
+    params: Record<string, string>;
+    checksum: string;
+    checksumHeader: string;
+    url: string;
+    xml_id: string;
 }
 
 export enum ErrorCode {
