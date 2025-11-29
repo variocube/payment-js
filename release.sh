@@ -24,6 +24,6 @@ js_version=$(jq .version -r < package.json)
 # Create and push version tag
 git tag "$js_version"
 
-git push origin master
+git push origin main
 git push --tags
 
