@@ -1,11 +1,1 @@
-## Summary
-
-### Current Behaviour
-
-### Desired Behaviour
-
-## Tasks
-
- - [ ] Task 1
- - [ ] Task 2
-
+../.devtools/ISSUE_TEMPLATE.md
