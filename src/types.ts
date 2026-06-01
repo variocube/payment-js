@@ -30,6 +30,7 @@ export enum PaymentStatus {
 export enum PaymentType {
     Cards = 'Cards',
     SepaDirectDebit = 'SepaDirectDebit',
+    Blik = 'Blik',
     PayPal = 'PayPal',
     PaymentRequest = 'PaymentRequest'
 }

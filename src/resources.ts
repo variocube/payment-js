@@ -116,6 +116,31 @@ export const resources = new Resources(language || Language.DE, {
         [Language.DE]: "Für Kunden im einheitlichen Euro-Zahlungsraum.",
         [Language.EE]: 'Ühtse euromaksete piirkonna klientidele.'
     },
+    PaymentMethodBlik: {
+        [Language.EN]: "BLIK",
+        [Language.DE]: "BLIK",
+        [Language.EE]: "BLIK"
+    },
+    PaymentMethodBlikDescription: {
+        [Language.EN]: "Pay with a BLIK code from your banking app (Poland).",
+        [Language.DE]: "Zahlen Sie mit einem BLIK-Code aus Ihrer Banking-App (Polen).",
+        [Language.EE]: "Maksa oma pangarakenduse BLIK-koodiga (Poola)."
+    },
+    PaymentFormBlikCode: {
+        [Language.EN]: "BLIK code (6 digits)",
+        [Language.DE]: "BLIK-Code (6 Ziffern)",
+        [Language.EE]: "BLIK-kood (6 numbrit)"
+    },
+    PaymentFormBlikCodeInvalid: {
+        [Language.EN]: "Please enter a valid 6-digit BLIK code.",
+        [Language.DE]: "Bitte geben Sie einen gültigen 6-stelligen BLIK-Code ein.",
+        [Language.EE]: "Palun sisestage kehtiv 6-kohaline BLIK-kood."
+    },
+    PaymentFormBlikHint: {
+        [Language.EN]: "After submitting, confirm the payment in your banking app.",
+        [Language.DE]: "Bestätigen Sie die Zahlung nach dem Absenden in Ihrer Banking-App.",
+        [Language.EE]: "Pärast esitamist kinnitage makse oma pangarakenduses."
+    },
     PaymentMethodNotSupported: {
         [Language.EN]: "Sorry! We don't support the selected payment method yet. Please try again with a different one.",
         [Language.DE]: "Leider unterstützen wir die gewählte Zahlungsmethode noch nicht. Bitte versuchen Sie es noch einmal mit einer anderen Zahlungsmethode.",

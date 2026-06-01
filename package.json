@@ -23,8 +23,8 @@
     "@mui/icons-material": "^5.5.x",
     "@mui/material": "^5.5.x",
     "@mui/styles": "^5.5.x",
-    "@stripe/react-stripe-js": "^1.7.x",
-    "@stripe/stripe-js": "^1.25.x",
+    "@stripe/react-stripe-js": "^1.13.0",
+    "@stripe/stripe-js": "^1.54.2",
     "react": "^17.x",
     "react-async-hook": "^4.0.0",
     "react-dom": "^17.x"
@@ -47,8 +47,8 @@
     "@mui/icons-material": "^5.5.x",
     "@mui/material": "^5.5.x",
     "@mui/styles": "^5.5.x",
-    "@stripe/react-stripe-js": "^1.7.x",
-    "@stripe/stripe-js": "^1.25.x",
+    "@stripe/react-stripe-js": "^1.13.0",
+    "@stripe/stripe-js": "^1.54.2",
     "react": "^17.x",
     "react-dom": "^17.x"
   },

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import {resources} from "../resources";
 import {PaypalPayment} from "./paypal";
-import {StripeCardPayment, StripePaymentRequest, StripeSepaPayment} from "./stripe";
+import {StripeBlikPayment, StripeCardPayment, StripePaymentRequest, StripeSepaPayment} from "./stripe";
 import {PaymentMethod, PaymentStatus, PaymentType, StripeClientSecret} from "../types";
 import {styles} from "../theme";
 import {EuroIcon, ImageIcon, LayersIcon, PaymentIcon, RefreshIcon} from "../icons";
@@ -77,7 +77,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                             />
                                         </ListItem>
                                     )}
-                                    {(method.stripe && method.stripe.last4Digits === undefined && [PaymentType.Cards, PaymentType.SepaDirectDebit].indexOf(method.stripe.type) > -1) && (
+                                    {(method.stripe && method.stripe.last4Digits === undefined && [PaymentType.Cards, PaymentType.SepaDirectDebit, PaymentType.Blik].indexOf(method.stripe.type) > -1) && (
                                         <ListItem button disabled={disabled} onClick={() => handleMethodSelection(method, false)}>
                                             <ListItemAvatar>
                                                 <Avatar style={styles.primaryBg}>
@@ -148,6 +148,8 @@ function renderPaymentTypeIcon(type: PaymentType) {
             return <PaymentIcon style={{ color: '#fff' }}/>;
         case PaymentType.SepaDirectDebit:
             return <EuroIcon style={{ color: '#fff' }}/>;
+        case PaymentType.Blik:
+            return <PaymentIcon style={{ color: '#fff' }}/>;
         case PaymentType.PayPal:
             return <PayPalIcon style={{ height: '50%', overflow: 'hidden' }} />;
         case PaymentType.PaymentRequest:
@@ -182,6 +184,12 @@ export function PaymentView(props: PaymentViewProps) {
                                             stripeClientSecret={stripeClientSecret}
                                             onPaymentError={e => onPaymentError(new Error('Failed to make Stripe Sepa Payment, error: ' + e.message))}
                                             onPaymentConfirmed={(status, saveMethod) => onPaymentConfirmed(status, paymentMethod, saveMethod)}
+                                            publicKey={paymentMethod.publicKey}/>;
+                break;
+            case PaymentType.Blik:
+                method = <StripeBlikPayment stripeClientSecret={stripeClientSecret}
+                                            onPaymentError={e => onPaymentError(new Error('Failed to make Stripe BLIK Payment, error: ' + e.message))}
+                                            onPaymentConfirmed={status => onPaymentConfirmed(status, paymentMethod)}
                                             publicKey={paymentMethod.publicKey}/>;
                 break;
             default:

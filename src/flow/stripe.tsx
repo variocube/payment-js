@@ -361,6 +361,152 @@ export const StripeSepaPayment = ({publicKey, payeeName, stripeClientSecret, onP
 
 
 /**
+ * BLIK PAYMENT ELEMENT
+ * Code-based payment for customers in Poland (PLN). No Stripe Element required.
+ */
+interface BlikPaymentFormProps {
+    stripe: Stripe;
+    stripeClientSecret: StripeClientSecret;
+    onPaymentError: (error: StripeJs.StripeError) => void;
+    onPaymentConfirmed: (paymentIntent: PaymentIntent) => void;
+}
+
+const BlikPaymentForm = ({stripe, stripeClientSecret, onPaymentError, onPaymentConfirmed}: BlikPaymentFormProps) => {
+    const [billingDetails, setBillingDetails] = useState<{ name: string, email: string }>({ name: '', email: '' });
+    const [code, setCode] = useState('');
+    const [processing, setProcessing] = useState(false);
+    const [error, setError] = useState<string>();
+
+    const handleSubmit = useCallback((event?: any) => {
+        if (event) event.preventDefault();
+        if (!/^\d{6}$/.test(code)) {
+            setError(messages.PaymentFormBlikCodeInvalid);
+            return;
+        }
+        if (billingDetails.name.trim().length === 0 || billingDetails.email.trim().length === 0) {
+            const top = document.getElementById('payment-flow-box');
+            if (top) {
+                top.scrollIntoView();
+            }
+            return;
+        }
+        setProcessing(true);
+        setError(undefined);
+        stripe.confirmBlikPayment(stripeClientSecret.clientSecret, {
+            payment_method: { blik: {}, billing_details: billingDetails },
+            payment_method_options: { blik: { code } }
+        })
+            .then(({error, paymentIntent}) => {
+                let confirmed = false;
+                if (paymentIntent && (paymentIntent.status === 'processing' || paymentIntent.status === 'succeeded')) {
+                    confirmed = true;
+                }
+                if (error) {
+                    if (error.payment_intent && (error.payment_intent.status === 'processing' || error.payment_intent.status === 'succeeded')) {
+                        confirmed = true;
+                        paymentIntent = error.payment_intent;
+                    } else {
+                        console.error('[error]', error);
+                        setError(error.message);
+                        onPaymentError(error);
+                    }
+                }
+                if (confirmed && paymentIntent) {
+                    onPaymentConfirmed(paymentIntent);
+                }
+            })
+            .finally(() => setProcessing(false));
+    }, [stripe, stripeClientSecret, code, billingDetails, onPaymentError, onPaymentConfirmed]);
+
+    const onBillingDetailsChange = (event: any) => {
+        setBillingDetails({
+            ...billingDetails,
+            [event.target.name]: event.target.value
+        });
+    };
+
+    return (
+        <div>
+            <Typography variant="h6" align="center">
+                <PaymentIcon style={styles.paymentTitleIcon as any}/>
+                <strong>{messages.PaymentMethodBlik}</strong>
+            </Typography>
+            <Box my={2}/>
+            <form onSubmit={handleSubmit}>
+                <Grid container spacing={1}>
+                    <Grid item xs={12} md={6}>
+                        <TextField fullWidth required
+                                   label={messages.Name} variant="outlined"
+                                   name="name" value={billingDetails.name}
+                                   onChange={onBillingDetailsChange}/>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <TextField fullWidth required
+                                   label={messages.Email} variant="outlined" type="email"
+                                   name="email" value={billingDetails.email}
+                                   onChange={onBillingDetailsChange}/>
+                    </Grid>
+                </Grid>
+                <Box my={1}/>
+                <TextField fullWidth required
+                           label={messages.PaymentFormBlikCode} variant="outlined"
+                           value={code}
+                           inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', maxLength: 6 }}
+                           onChange={e => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}/>
+                <Box my={1}/>
+                <Typography variant="body2" align="center" style={{ fontSize: '0.8rem' }}>
+                    {messages.PaymentFormBlikHint}
+                </Typography>
+                <Box mt={2} style={{ textAlign: 'center'}}>
+                    <Button type="submit" style={{ minWidth: 150 }} size="large" variant="outlined" color="primary" disabled={!stripe || processing}>Pay</Button>
+                </Box>
+            </form>
+            { processing && (
+                <Box mt={2}>
+                    <Typography variant="body1" align="center">{messages.ProcessingPayment}</Typography>
+                </Box>
+            )}
+            { error && (
+                <Box mt={2}>
+                    <Alert severity="error">{error}</Alert>
+                </Box>
+            )}
+        </div>
+    )
+}
+
+interface StripeBlikPaymentProps {
+    publicKey: string;
+    stripeClientSecret: StripeClientSecret;
+    onPaymentError: (error: StripeJs.StripeError) => void;
+    onPaymentConfirmed: (status: PaymentStatus) => void;
+}
+
+export const StripeBlikPayment = ({publicKey, stripeClientSecret, onPaymentError, onPaymentConfirmed}: StripeBlikPaymentProps) => {
+    const [stripe, setStripe] = useState<Stripe>();
+
+    useEffect(() => {
+        loadStripe(publicKey)
+            .then(s => setStripe(s || undefined));
+    }, []);
+
+    return (
+        (!stripe) ?
+            <Typography>Loading...</Typography> :
+            <Elements stripe={stripe}>
+                <ElementsConsumer>
+                    {({stripe}: any) => (
+                        <BlikPaymentForm stripe={stripe} stripeClientSecret={stripeClientSecret}
+                                         onPaymentError={onPaymentError}
+                                         onPaymentConfirmed={paymentIntent => handlePaymentConfirmed(paymentIntent, false, onPaymentConfirmed)}/>
+                    )}
+                </ElementsConsumer>
+            </Elements>
+    )
+}
+
+
+/**
  * PAYMENT REQUEST
  * For Apple Pay, Google Pay and Microsoft Pay
  */
