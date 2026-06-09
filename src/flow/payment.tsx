@@ -72,7 +72,7 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                 <Avatar style={styles.primaryBg}><RefreshIcon style={{ color: '#fff' }}/></Avatar>
                                             </ListItemAvatar>
                                             <ListItemText
-                                                primary={(messages as any)['StorePaymentMethod' + method.stripe.type]}
+                                                primary={storedPaymentMethodLabel(method.stripe.type)}
                                                 secondary={method.stripe?.last4Digits}
                                             />
                                         </ListItem>
@@ -85,8 +85,8 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
                                                 </Avatar>
                                             </ListItemAvatar>
                                             <ListItemText
-                                                primary={(messages as any)['PaymentMethod' + method.stripe.type]}
-                                                secondary={(messages as any)['PaymentMethod' + method.stripe.type + 'Description']}
+                                                primary={paymentMethodLabel(method.stripe.type)}
+                                                secondary={paymentMethodDescription(method.stripe.type)}
                                             />
                                         </ListItem>
                                     )}
@@ -140,6 +140,43 @@ export function PaymentMethodList({paymentMethods, currency, onPaymentError, onP
             </Paper>
         </Fragment>
     );
+}
+
+function storedPaymentMethodLabel(type: PaymentType): string {
+    switch (type) {
+        case PaymentType.Cards:
+            return messages.StorePaymentMethodCards;
+        case PaymentType.SepaDirectDebit:
+            return messages.StorePaymentMethodSepaDirectDebit;
+        default:
+            return '';
+    }
+}
+
+function paymentMethodLabel(type: PaymentType): string {
+    switch (type) {
+        case PaymentType.Cards:
+            return messages.PaymentMethodCards;
+        case PaymentType.SepaDirectDebit:
+            return messages.PaymentMethodSepaDirectDebit;
+        case PaymentType.Blik:
+            return messages.PaymentMethodBlik;
+        default:
+            return '';
+    }
+}
+
+function paymentMethodDescription(type: PaymentType): string {
+    switch (type) {
+        case PaymentType.Cards:
+            return messages.PaymentMethodCardsDescription;
+        case PaymentType.SepaDirectDebit:
+            return messages.PaymentMethodSepaDirectDebitDescription;
+        case PaymentType.Blik:
+            return messages.PaymentMethodBlikDescription;
+        default:
+            return '';
+    }
 }
 
 function renderPaymentTypeIcon(type: PaymentType) {

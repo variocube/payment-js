@@ -23,7 +23,7 @@
     "@mui/icons-material": "^5.5.x",
     "@mui/material": "^5.5.x",
     "@mui/styles": "^5.5.x",
-    "@stripe/react-stripe-js": "^1.13.0",
+    "@stripe/react-stripe-js": "1.13.0",
     "@stripe/stripe-js": "^1.54.2",
     "react": "^17.x",
     "react-async-hook": "^4.0.0",

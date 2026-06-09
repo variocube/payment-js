@@ -383,13 +383,6 @@ const BlikPaymentForm = ({stripe, stripeClientSecret, onPaymentError, onPaymentC
             setError(messages.PaymentFormBlikCodeInvalid);
             return;
         }
-        if (billingDetails.name.trim().length === 0 || billingDetails.email.trim().length === 0) {
-            const top = document.getElementById('payment-flow-box');
-            if (top) {
-                top.scrollIntoView();
-            }
-            return;
-        }
         setProcessing(true);
         setError(undefined);
         stripe.confirmBlikPayment(stripeClientSecret.clientSecret, {
