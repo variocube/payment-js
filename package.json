@@ -17,6 +17,10 @@
   ],
   "author": "Variocube GmbH",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/variocube/payment-js.git"
+  },
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
