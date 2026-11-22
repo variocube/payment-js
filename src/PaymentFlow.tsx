@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {Alert, AlertTitle, Box, Button, Dialog, DialogContent, Divider, Typography} from "@mui/material";
-import {makeStyles} from "@mui/styles";
 import {styles} from "./theme";
 import {Language, resources} from "./resources";
 import {
@@ -23,12 +22,6 @@ import {
 import {CheckCircleOutlineRoundedIcon, HighlightOffIcon, HourglassEmptyRoundedIcon} from "./icons";
 import {PaymentMethodList, PaymentView} from "./flow/payment";
 
-const useStyles = makeStyles({
-    dialogContent: {
-        overflowY: 'visible'
-    }
-})
-
 type PaymentFlowProps = {
     paymentId: string,
     onClose: () => void,
@@ -44,7 +37,6 @@ export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onEr
     const smallDisplay = window.innerWidth <= 480 || smallDevice;
     env.stage = (live) ? 'live' : 'dev';
     env.paymentId = paymentId;
-    const classes = useStyles();
 
     return (
         <Dialog open={true}
@@ -52,7 +44,7 @@ export const PaymentFlow = ({paymentId, onClose, onSucceeded, onProcessing, onEr
                 fullScreen={smallDisplay}
                 maxWidth="sm"
         >
-            <DialogContent id="payment-flow-box" style={(smallDisplay ? styles.contentWrapper : styles.contentBoxed) as any} classes={{ root: classes.dialogContent }}>
+            <DialogContent id="payment-flow-box" style={(smallDisplay ? styles.contentWrapper : styles.contentBoxed) as any} sx={{overflowY: 'visible'}}>
                 <Box px={smallDisplay ? 0 : 2} py={2} style={{ flexGrow: 1 }}>
                     <PaymentShell
                         onClose={onClose}
