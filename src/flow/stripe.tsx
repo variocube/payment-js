@@ -1,6 +1,8 @@
 import React, {useCallback, useEffect, useState} from "react";
-import StripeJs from "@stripe/stripe-js";
-import {loadStripe, PaymentIntent, PaymentRequest, Stripe} from "@stripe/stripe-js";
+import type StripeJs from "@stripe/stripe-js";
+import type {PaymentIntent, PaymentRequest, Stripe} from "@stripe/stripe-js";
+// The "pure" entry does not inject js.stripe.com on import; the script is loaded on the first loadStripe() call.
+import {loadStripe as loadStripePure} from "@stripe/stripe-js/pure";
 import {Alert, Box, Button, Checkbox, FormControlLabel, Grid, Paper, TextField, Typography} from "@mui/material";
 import {
     CardElement,
@@ -16,6 +18,19 @@ import {env, fetchStripeClientSecret} from "../request";
 import {PaymentIcon} from "../icons";
 
 const messages = resources.getStrings();
+
+const stripeByKey = new Map<string, Promise<Stripe | null>>();
+
+/** Loads Stripe.js lazily and creates one Stripe instance per publishable key. */
+const loadStripe = (publicKey: string): Promise<Stripe | null> => {
+    let stripe = stripeByKey.get(publicKey);
+    if (!stripe) {
+        stripe = loadStripePure(publicKey);
+        // A failed script load is not retryable within the page (stripe-js caches the rejection), as before.
+        stripeByKey.set(publicKey, stripe);
+    }
+    return stripe;
+};
 const stripeStyle = {
     style: {
         base: {
